@@ -1,7 +1,13 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
+const ScreeningQuestion = require('./ScreeningQuestion'); 
 
+// Define the InternalJob model
 const InternalJob = sequelize.define('InternalJob', {
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
   job_title: {
     type: DataTypes.STRING,
     allowNull: false
@@ -15,63 +21,63 @@ const InternalJob = sequelize.define('InternalJob', {
     allowNull: false
   },
   budget_from: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: DataTypes.FLOAT,
+    allowNull: true
   },
   budget_to: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: DataTypes.FLOAT,
+    allowNull: true
   },
-  expeirence_from: {
-    type: DataTypes.STRING,
-    allowNull: false
+  experience_from: {
+    type: DataTypes.INTEGER,
+    allowNull: true
   },
-  expeirence_to: {
-    type: DataTypes.STRING,
-    allowNull: false
+  experience_to: {
+    type: DataTypes.INTEGER,
+    allowNull: true
   },
   experience_type: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   hiring_process: {
-    type: DataTypes.JSON,
-    allowNull: false
+    type: DataTypes.TEXT,
+    allowNull: true
   },
   interview_date_from: {
-    type: DataTypes.DATEONLY,
-    allowNull: false
+    type: DataTypes.DATE,
+    allowNull: true
   },
   interview_date_to: {
-    type: DataTypes.DATEONLY,
-    allowNull: false
+    type: DataTypes.DATE,
+    allowNull: true
   },
   job_duration_from: {
-    type: DataTypes.DATEONLY,
-    allowNull: false
+    type: DataTypes.STRING,
+    allowNull: true
   },
   job_duration_to: {
-    type: DataTypes.DATEONLY,
-    allowNull: false
+    type: DataTypes.STRING,
+    allowNull: true
   },
   notice_period: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   priority_skills: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: DataTypes.STRING, // Changed to STRING to store comma separated skills
+    allowNull: true
   }
 }, {
+  tableName: 'InternalJobs',
   timestamps: true
 });
 
-// Add the reverse association for `hasMany`
-InternalJob.associate = models => {
-  InternalJob.hasMany(models.ScreeningQuestion, {
-    foreignKey: 'job_id',
-    as: 'screeningQuestions' // Alias for the related ScreeningQuestions
-  });
-};
+ // Define the association
+ InternalJob.hasMany(ScreeningQuestion, { foreignKey: 'job_id', as: 'ScreeningQuestions' });
 
 module.exports = InternalJob;
+
+
+
+

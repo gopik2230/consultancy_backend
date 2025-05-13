@@ -23,5 +23,5 @@ sequelize.sync() // Set to true if you want to reset the database { force: true 
     });
   })
   .catch(err => {
-    console.error('Unable to connect to the database:', err);
+    console.error('Unable to connect to the database:', err); 
   });

@@ -178,13 +178,13 @@ exports.postJobInternal = async (req, res) => {
       experience_from: parseInt(experience_from), // Ensure experience is an integer
       experience_to: parseInt(experience_to), // Ensure experience is an integer
       experience_type,
-      hiring_process: JSON.stringify(hiring_process), // Store as JSON string
+      hiring_process, // Store as JSON string
       interview_date_from: new Date(interview_date_from), // Convert to Date
       interview_date_to: new Date(interview_date_to), // Convert to Date
       job_duration_from,
       job_duration_to,
       notice_period,
-      priority_skills, // Assuming skills are comma-separated
+      priority_skills, 
     });
 
     // Create associated screening questions

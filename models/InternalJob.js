@@ -41,7 +41,7 @@ const InternalJob = sequelize.define('InternalJob', {
     allowNull: true
   },
   hiring_process: {
-    type: DataTypes.TEXT,
+    type: DataTypes.JSON,
     allowNull: true
   },
   interview_date_from: {
@@ -65,8 +65,13 @@ const InternalJob = sequelize.define('InternalJob', {
     allowNull: true
   },
   priority_skills: {
-    type: DataTypes.STRING, // Changed to STRING to store comma separated skills
+    type: DataTypes.JSON, 
     allowNull: true
+  },
+  job_status: {
+    type: DataTypes.STRING,
+    defaultValue: "open",
+    allowNull: false
   }
 }, {
   tableName: 'InternalJobs',

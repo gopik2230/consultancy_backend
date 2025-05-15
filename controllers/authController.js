@@ -53,7 +53,7 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password)
     if(!isMatch) return res.status(401).json({message : 'Incorrect Password'})
       console.log("process.env.JWT_SECRET ",process.env.JWT_SECRET)
-    const token = jwt.sign({ id:user.id }, process.env.JWT_SECRET, {expiresIn: '1h'})
+    const token = jwt.sign({ id:user.id, role_id:user.role_id }, process.env.JWT_SECRET, {expiresIn: '1h'})
 
     // Prepare user data for response
     const userResponse = {

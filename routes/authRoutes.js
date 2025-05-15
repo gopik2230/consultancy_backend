@@ -2,6 +2,7 @@
 const express = require('express');
 const { signup, login, companyProfileInfo } = require('../controllers/authController');
 const { postJobInternal, getPostedJobList } = require('../controllers/JobPost');
+const verifyClientToken = require("../middleware/clientMiddleware")
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ const router = express.Router();
 router.post('/signup', signup);
 router.post('/login', login);
 router.post('/companyProfile', companyProfileInfo);
-router.post('/internal-job', postJobInternal);
-router.get('/internal/list', getPostedJobList); // New route
+router.post('/internal-job', verifyClientToken, postJobInternal);
+router.get('/job/list', verifyClientToken, getPostedJobList); // New route
 
 module.exports = router;

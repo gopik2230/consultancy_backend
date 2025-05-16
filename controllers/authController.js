@@ -39,6 +39,46 @@ exports.signup = async (req, res) => {
   }
 };
 
+exports.candidateSignup = async (req, res) => {
+  const { name, email, password, confirmPassword, phone, role_id } = req.body;
+
+  try {
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: 'Passwords do not match' });
+    }
+
+    // Check if the email already exists
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email is already registered' });
+    }
+
+    // Hash the password before saving
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new candidate user (role_id = 1 for candidate)
+    await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      phone,
+      role_id,
+      initial_user: true
+    });
+
+    return res.status(201).json({
+      message: 'Candidate registered successfully',
+    });
+  } catch (err) {
+    console.error('Error during candidate signup:', err);
+    return res.status(500).json({ 
+      message: 'Server error', 
+      error: process.env.NODE_ENV === 'development' ? err : undefined 
+    });
+  }
+};
+
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 

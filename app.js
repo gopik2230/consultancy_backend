@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const sequelize = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const jobRoutes = require('./routes/jobRoutes')
 const cors = require('cors');
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(cors());
 
 // Routes
 app.use('/api', authRoutes);
+app.use('/api', jobRoutes);
 
 // Sync database and start server
 sequelize.sync() // Set to true if you want to reset the database { force: true }

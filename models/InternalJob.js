@@ -72,6 +72,11 @@ const InternalJob = sequelize.define('InternalJob', {
     type: DataTypes.STRING,
     defaultValue: "open",
     allowNull: false
+  },
+  job_type: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: 'full-time' // Optional: set default if needed
   }
 }, {
   tableName: 'InternalJobs',

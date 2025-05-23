@@ -3,7 +3,7 @@ const sequelize = require('../config/db');
 const ScreeningQuestion = require('./ScreeningQuestion'); 
 
 // Define the InternalJob model
-const InternalJob = sequelize.define('InternalJob', {
+const ExternalJob = sequelize.define('ExternalJob', {
   user_id: {
     type: DataTypes.INTEGER,
     allowNull: false
@@ -76,17 +76,17 @@ const InternalJob = sequelize.define('InternalJob', {
   job_type: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: 'internal' // Optional: set default if needed
+    defaultValue: 'external' // Optional: set default if needed
   }
 }, {
-  tableName: 'InternalJobs',
+  tableName: 'ExternalJobs',
   timestamps: true
 });
 
  // Define the association
- InternalJob.hasMany(ScreeningQuestion, { foreignKey: 'job_id', as: 'ScreeningQuestions' });
+ ExternalJob.hasMany(ScreeningQuestion, { foreignKey: 'job_id', as: 'ScreeningQuestions' });
 
-module.exports = InternalJob;
+module.exports = ExternalJob;
 
 
 

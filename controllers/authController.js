@@ -80,13 +80,16 @@ exports.candidateSignup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, role_id } = req.body;
 
   try {
     // Check if the email already exists
     const user = await User.findOne({ where: { email } });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
+    } else {
+      console.log("user ",user.role_id, role_id)
+      if(user.role_id != role_id) return res.status(404).json({ message: 'User not found' });
     }
 
     // compare the password 
@@ -106,7 +109,7 @@ exports.login = async (req, res) => {
 
 
     // Check if `initial_user` is false to include `company_profile`
-    if (!user.initial_user) {
+    if (user.role_id === 2 && !user.initial_user) {
       // Fetch the associated company profile
       const companyProfile = await CompanyProfile.findOne({ where: { user_id: user.id } });
 
